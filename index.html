@@ -4,1426 +4,255 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TGA Trading Platform</title>
-
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Inter,Arial,sans-serif;
-}
-
-body{
-    background:#080b12;
-    color:#f5f7fb;
-    min-height:100vh;
-}
-
-button{
-    font-family:inherit;
-    cursor:pointer;
-}
-
-.app{
-    display:flex;
-    min-height:100vh;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-    width:245px;
-    background:#0d111a;
-    border-right:1px solid #202633;
-    padding:20px 14px;
-    position:fixed;
-    left:0;
-    top:0;
-    bottom:0;
-    z-index:10;
-}
-
-.logo{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:5px 10px 28px;
-}
-
-.logo-box{
-    width:42px;
-    height:42px;
-    border-radius:12px;
-    background:linear-gradient(135deg,#f5c542,#ff8a00);
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:#080b12;
-    font-weight:900;
-    font-size:18px;
-}
-
-.logo-text{
-    font-size:18px;
-    font-weight:800;
-}
-
-.logo-text span{
-    display:block;
-    color:#8992a5;
-    font-size:10px;
-    font-weight:500;
-    margin-top:2px;
-}
-
-.menu-title{
-    color:#596275;
-    font-size:10px;
-    text-transform:uppercase;
-    letter-spacing:1.5px;
-    padding:14px 12px 8px;
-}
-
-.menu a{
-    display:flex;
-    align-items:center;
-    gap:13px;
-    padding:12px 13px;
-    margin:3px 0;
-    border-radius:9px;
-    color:#9ca5b6;
-    text-decoration:none;
-    font-size:13px;
-    transition:.2s;
-}
-
-.menu a:hover,
-.menu a.active{
-    background:#171d29;
-    color:#fff;
-}
-
-.menu a.active{
-    border-left:3px solid #f5c542;
-}
-
-.icon{
-    width:20px;
-    text-align:center;
-    font-size:16px;
-}
-
-.sidebar-bottom{
-    position:absolute;
-    bottom:20px;
-    left:14px;
-    right:14px;
-}
-
-.user-card{
-    background:#131924;
-    border:1px solid #232b39;
-    border-radius:12px;
-    padding:12px;
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.avatar{
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    background:#252d3c;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:13px;
-    font-weight:700;
-}
-
-.user-info{
-    flex:1;
-}
-
-.user-info strong{
-    display:block;
-    font-size:12px;
-}
-
-.user-info span{
-    color:#6e788b;
-    font-size:10px;
-}
-
-/* MAIN */
-
-.main{
-    margin-left:245px;
-    width:calc(100% - 245px);
-}
-
-/* TOPBAR */
-
-.topbar{
-    height:68px;
-    border-bottom:1px solid #202633;
-    background:#0b0f17;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:0 28px;
-    position:sticky;
-    top:0;
-    z-index:5;
-}
-
-.page-title h1{
-    font-size:19px;
-}
-
-.page-title p{
-    color:#697386;
-    font-size:11px;
-    margin-top:3px;
-}
-
-.top-actions{
-    display:flex;
-    align-items:center;
-    gap:10px;
-}
-
-.market-status{
-    display:flex;
-    align-items:center;
-    gap:7px;
-    background:#111824;
-    border:1px solid #202a38;
-    padding:8px 12px;
-    border-radius:8px;
-    color:#9aa4b5;
-    font-size:11px;
-}
-
-.dot{
-    width:7px;
-    height:7px;
-    background:#25d07b;
-    border-radius:50%;
-    box-shadow:0 0 8px #25d07b;
-}
-
-.notification{
-    width:36px;
-    height:36px;
-    border:1px solid #252d3a;
-    background:#111722;
-    border-radius:8px;
-    color:#b9c1cf;
-}
-
-/* CONTENT */
-
-.content{
-    padding:25px 28px 40px;
-}
-
-/* MARKET STRIP */
-
-.market-strip{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:12px;
-    margin-bottom:20px;
-}
-
-.market-card{
-    background:#0f141e;
-    border:1px solid #202735;
-    border-radius:11px;
-    padding:15px;
-}
-
-.market-card .name{
-    color:#7c8698;
-    font-size:11px;
-}
-
-.market-card .price{
-    font-size:19px;
-    font-weight:700;
-    margin-top:6px;
-}
-
-.up{
-    color:#25d07b;
-}
-
-.down{
-    color:#ff5e6c;
-}
-
-.change{
-    font-size:10px;
-    margin-top:5px;
-}
-
-/* GRID */
-
-.dashboard-grid{
-    display:grid;
-    grid-template-columns:2fr 1fr;
-    gap:18px;
-}
-
-/* CARDS */
-
-.card{
-    background:#0f141e;
-    border:1px solid #202735;
-    border-radius:12px;
-    overflow:hidden;
-}
-
-.card-header{
-    padding:17px 18px;
-    border-bottom:1px solid #202735;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-}
-
-.card-header h2{
-    font-size:14px;
-}
-
-.card-header span{
-    color:#697386;
-    font-size:10px;
-}
-
-/* PORTFOLIO */
-
-.portfolio{
-    padding:22px;
-}
-
-.portfolio-label{
-    color:#7b8597;
-    font-size:11px;
-}
-
-.portfolio-value{
-    font-size:32px;
-    font-weight:800;
-    margin-top:6px;
-}
-
-.portfolio-profit{
-    margin-top:8px;
-    font-size:12px;
-}
-
-.stats{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:22px;
-}
-
-.stat{
-    background:#131924;
-    border:1px solid #202735;
-    border-radius:9px;
-    padding:13px;
-}
-
-.stat label{
-    display:block;
-    color:#6f7889;
-    font-size:10px;
-    margin-bottom:6px;
-}
-
-.stat strong{
-    font-size:14px;
-}
-
-/* CHART */
-
-.chart{
-    height:240px;
-    padding:15px 20px 10px;
-    position:relative;
-}
-
-.chart svg{
-    width:100%;
-    height:100%;
-}
-
-.chart-grid{
-    stroke:#202735;
-    stroke-width:1;
-}
-
-.chart-line{
-    fill:none;
-    stroke:#f5c542;
-    stroke-width:2.5;
-}
-
-.chart-area{
-    fill:url(#areaGradient);
-    opacity:.35;
-}
-
-/* WATCHLIST */
-
-.watchlist{
-    padding:4px 0;
-}
-
-.watch-row{
-    display:grid;
-    grid-template-columns:1.3fr 1fr 1fr;
-    padding:13px 18px;
-    border-bottom:1px solid #1d2430;
-    align-items:center;
-}
-
-.watch-row:last-child{
-    border-bottom:none;
-}
-
-.symbol{
-    font-weight:700;
-    font-size:12px;
-}
-
-.company{
-    display:block;
-    color:#626d80;
-    font-size:9px;
-    margin-top:3px;
-}
-
-.price{
-    font-size:12px;
-    text-align:right;
-}
-
-.percent{
-    text-align:right;
-    font-size:11px;
-}
-
-/* POSITIONS */
-
-.full-card{
-    margin-top:18px;
-}
-
-.table-wrap{
-    overflow-x:auto;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-th{
-    text-align:left;
-    padding:12px 18px;
-    color:#657083;
-    font-size:9px;
-    text-transform:uppercase;
-    letter-spacing:.6px;
-    border-bottom:1px solid #202735;
-    white-space:nowrap;
-}
-
-td{
-    padding:14px 18px;
-    border-bottom:1px solid #1b222d;
-    font-size:11px;
-    white-space:nowrap;
-}
-
-tr:last-child td{
-    border-bottom:none;
-}
-
-.buy-badge{
-    display:inline-block;
-    background:#123a2a;
-    color:#32db8a;
-    border-radius:5px;
-    padding:4px 7px;
-    font-size:9px;
-    font-weight:700;
-}
-
-.sell-badge{
-    display:inline-block;
-    background:#3d1d25;
-    color:#ff6572;
-    border-radius:5px;
-    padding:4px 7px;
-    font-size:9px;
-    font-weight:700;
-}
-
-/* BUTTONS */
-
-.btn{
-    border:0;
-    border-radius:6px;
-    padding:7px 12px;
-    font-size:10px;
-    font-weight:700;
-}
-
-.btn-buy{
-    background:#18b76b;
-    color:white;
-}
-
-.btn-sell{
-    background:#e64f5d;
-    color:white;
-}
-
-.btn-outline{
-    background:#151b26;
-    color:#aeb7c6;
-    border:1px solid #293241;
-}
-
-/* QUICK TRADE */
-
-.quick-trade{
-    padding:18px;
-}
-
-.trade-symbol{
-    background:#131924;
-    border:1px solid #242c3a;
-    border-radius:8px;
-    padding:12px;
-    margin-bottom:12px;
-}
-
-.trade-symbol small{
-    display:block;
-    color:#6f7889;
-    font-size:9px;
-}
-
-.trade-symbol strong{
-    font-size:16px;
-}
-
-.trade-input{
-    width:100%;
-    background:#111722;
-    border:1px solid #242c3a;
-    color:white;
-    border-radius:7px;
-    padding:10px;
-    margin-bottom:10px;
-    outline:none;
-}
-
-.trade-actions{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:8px;
-}
-
-/* ORDERS */
-
-.order-row{
-    display:flex;
-    justify-content:space-between;
-    padding:13px 18px;
-    border-bottom:1px solid #1d2430;
-}
-
-.order-row:last-child{
-    border-bottom:none;
-}
-
-.order-left strong{
-    display:block;
-    font-size:11px;
-}
-
-.order-left span{
-    color:#657083;
-    font-size:9px;
-}
-
-.order-right{
-    text-align:right;
-}
-
-.order-right strong{
-    display:block;
-    font-size:11px;
-}
-
-.order-right span{
-    color:#657083;
-    font-size:9px;
-}
-
-/* MOBILE */
-
-.mobile-menu{
-    display:none;
-}
-
-@media(max-width:1000px){
-
-    .sidebar{
-        width:70px;
-        padding:15px 8px;
-    }
-
-    .logo{
-        justify-content:center;
-        padding-bottom:20px;
-    }
-
-    .logo-text,
-    .menu-title,
-    .menu a span:not(.icon),
-    .user-info{
-        display:none;
-    }
-
-    .menu a{
-        justify-content:center;
-        padding:13px 5px;
-    }
-
-    .user-card{
-        justify-content:center;
-        padding:7px;
-    }
-
-    .main{
-        margin-left:70px;
-        width:calc(100% - 70px);
-    }
-
-    .dashboard-grid{
-        grid-template-columns:1fr;
-    }
-
-    .market-strip{
-        grid-template-columns:repeat(2,1fr);
-    }
-}
-
-@media(max-width:650px){
-
-    .sidebar{
-        display:none;
-    }
-
-    .main{
-        margin-left:0;
-        width:100%;
-    }
-
-    .topbar{
-        padding:0 15px;
-    }
-
-    .content{
-        padding:15px;
-    }
-
-    .market-strip{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .stats{
-        grid-template-columns:1fr;
-    }
-
-    .portfolio-value{
-        font-size:26px;
-    }
-
-    .market-status{
-        display:none;
-    }
-
-    .topbar{
-        height:60px;
-    }
-}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
+:root{
+ --bg:#080b12;--panel:#0e1420;--panel2:#121a28;--border:#202a3a;
+ --text:#f4f7fb;--muted:#8994a8;--gold:#f5b51b;--green:#19c37d;
+ --red:#ef5361;--blue:#4e8cff;--shadow:0 12px 30px rgba(0,0,0,.25)
+}
+body{background:var(--bg);color:var(--text);min-height:100vh}
+button,input,select{font:inherit}
+button{cursor:pointer}
+.app{display:flex;min-height:100vh}
+.sidebar{width:225px;background:#0a0e16;border-right:1px solid var(--border);padding:20px 12px;position:fixed;left:0;top:0;bottom:0;z-index:20}
+.brand{display:flex;align-items:center;gap:12px;padding:4px 8px 25px}
+.logo{width:38px;height:38px;border-radius:10px;background:var(--gold);color:#111;display:grid;place-items:center;font-weight:900;font-size:20px}
+.brand strong{display:block;font-size:16px}.brand span{font-size:10px;color:var(--muted);letter-spacing:.7px}
+.section-title{font-size:10px;color:#647086;letter-spacing:1.5px;margin:15px 10px 8px}
+.nav button{width:100%;border:0;background:transparent;color:#aab4c6;text-align:left;padding:11px 12px;border-radius:9px;margin:2px 0;display:flex;align-items:center;gap:12px;font-size:13px}
+.nav button:hover,.nav button.active{background:#171e2c;color:#fff}
+.nav button.active{box-shadow:inset 2px 0 var(--gold)}
+.icon{width:17px;text-align:center;color:#aeb9ca}
+.account{position:absolute;bottom:18px;left:12px;right:12px;background:#111826;border:1px solid var(--border);border-radius:11px;padding:11px;display:flex;align-items:center;gap:10px}
+.avatar{width:34px;height:34px;border-radius:50%;background:#263044;display:grid;place-items:center;font-size:11px;font-weight:700}
+.account b{font-size:12px}.account small{color:var(--muted);font-size:10px}
+.main{margin-left:225px;width:calc(100% - 225px);padding:22px 24px}
+.topbar{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.title h1{font-size:20px}.title p{font-size:11px;color:var(--muted);margin-top:5px}
+.top-actions{display:flex;align-items:center;gap:8px}
+.live{font-size:11px;color:#26d98d;background:#101a19;border:1px solid #1e4c3d;border-radius:20px;padding:8px 12px}
+.live i{display:inline-block;width:7px;height:7px;background:var(--green);border-radius:50%;margin-right:6px}
+.top-btn{width:34px;height:34px;background:#111824;border:1px solid var(--border);color:#aeb8c8;border-radius:8px}
+.page{display:none}.page.active{display:block}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:12px}
+.card{background:var(--panel);border:1px solid var(--border);border-radius:10px;padding:15px}
+.market-card{min-height:76px}.market-card .label{font-size:10px;color:#8b96aa}.price{font-size:18px;font-weight:700;text-align:right;margin-top:-2px}.change{font-size:10px;margin-top:8px}.up{color:var(--green)}.down{color:var(--red)}
+.grid-main{display:grid;grid-template-columns:minmax(0,1fr) 430px;gap:12px}
+.panel{background:var(--panel);border:1px solid var(--border);border-radius:11px;overflow:hidden;margin-bottom:12px}
+.panel-head{padding:15px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center}.panel-head h3{font-size:13px}.panel-head span{font-size:10px;color:var(--muted)}
+.overview{padding:18px}.eyebrow{font-size:10px;color:var(--muted)}.big{font-size:31px;font-weight:800;margin:8px 0}.profit{font-size:12px;color:var(--green)}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:25px}.stat{border:1px solid var(--border);border-radius:9px;padding:13px}.stat small{display:block;color:var(--muted);font-size:9px;margin-bottom:6px}.stat b{font-size:12px}
+.chart{height:210px;padding:15px 18px 10px;margin-top:5px}.chart svg{width:100%;height:100%}.gridline{stroke:#202939;stroke-width:1}.line{fill:none;stroke:var(--gold);stroke-width:2.2}
+.quick .body{padding:15px}.field{margin-bottom:10px}.field label{display:block;font-size:10px;color:var(--muted);margin-bottom:6px}.field input,.field select{width:100%;background:#111927;border:1px solid #273246;color:#fff;padding:10px;border-radius:8px;outline:none}.trade-btns{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:5px}.buy,.sell{border:0;color:#fff;padding:10px;border-radius:7px;font-size:11px;font-weight:700}.buy{background:#18b96f}.sell{background:#e94d5b}
+.watch-row{display:grid;grid-template-columns:1.2fr 1fr .7fr;padding:12px 15px;border-bottom:1px solid #1b2432;font-size:11px;align-items:center}.watch-row:last-child{border-bottom:0}.watch-row small{display:block;color:#667289;font-size:9px;margin-top:3px}.right .panel{height:auto}
+.table{width:100%;border-collapse:collapse}.table th{font-size:9px;color:#667289;font-weight:500;text-align:left;padding:11px 15px;border-bottom:1px solid var(--border)}.table td{font-size:10px;padding:12px 15px;border-bottom:1px solid #1b2432}.badge{padding:4px 7px;border-radius:5px;font-size:9px}.badge.buy{background:#123d2b;color:#35dc91}.badge.sell{background:#431c25;color:#ff6b77}.exit{border:0;background:#ed5361;color:white;border-radius:6px;padding:6px 10px;font-size:9px}
+.searchbar{display:flex;gap:10px;margin-bottom:12px}.searchbar input{flex:1;background:var(--panel);border:1px solid var(--border);padding:11px;border-radius:8px;color:#fff}.primary{background:var(--gold);border:0;color:#111;padding:10px 15px;border-radius:8px;font-weight:700}
+.cards-3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.strategy-card{padding:18px}.strategy-card h3{font-size:14px;margin-bottom:8px}.strategy-card p{font-size:11px;color:var(--muted);line-height:1.6}.strategy-card button{margin-top:15px;width:100%;padding:9px;border:1px solid #344055;background:#151d2b;color:#fff;border-radius:7px}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.setting{padding:16px}.setting h3{font-size:13px;margin-bottom:15px}.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid var(--border);font-size:11px;color:#b5bfce}.toggle{width:38px;height:21px;background:#30394a;border-radius:20px;position:relative}.toggle:after{content:"";position:absolute;width:17px;height:17px;top:2px;left:2px;background:#fff;border-radius:50%;transition:.2s}.toggle.on{background:var(--green)}.toggle.on:after{left:19px}
+.notice{padding:12px 15px;background:#111a29;border:1px solid #27344a;border-radius:8px;font-size:11px;color:#aeb8c8;margin-bottom:12px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:50;place-items:center}.modal.show{display:grid}.modal-box{width:min(420px,90vw);background:#101722;border:1px solid #2b3648;border-radius:12px;padding:20px;box-shadow:var(--shadow)}.modal-box h2{font-size:17px;margin-bottom:8px}.modal-box p{font-size:11px;color:var(--muted);line-height:1.6}.modal-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:18px}.modal-actions button{padding:9px 14px;border-radius:7px;border:1px solid #303b4e;background:#182131;color:#fff}.modal-actions .confirm{background:var(--gold);color:#111;border:0}
+.toast{position:fixed;right:25px;bottom:25px;background:#172131;border:1px solid #304056;color:#fff;padding:12px 16px;border-radius:8px;font-size:11px;display:none;z-index:80}.toast.show{display:block}
+@media(max-width:1000px){.sidebar{width:190px}.main{margin-left:190px;width:calc(100% - 190px)}.grid-main{grid-template-columns:1fr}.cards{grid-template-columns:repeat(2,1fr)}.cards-3{grid-template-columns:1fr 1fr}}
+@media(max-width:700px){.sidebar{position:fixed;width:0;padding:0;overflow:hidden}.main{margin-left:0;width:100%;padding:15px}.cards,.cards-3,.settings-grid,.stats{grid-template-columns:1fr}.topbar{gap:10px}.top-actions .live{display:none}.mobile-menu{display:block}.table{min-width:720px}.panel{overflow-x:auto}}
+.mobile-menu{display:none}
 </style>
 </head>
-
 <body>
-
 <div class="app">
-
-<!-- SIDEBAR -->
-
-<aside class="sidebar">
-
-    <div class="logo">
-        <div class="logo-box">T</div>
-        <div class="logo-text">
-            TGA
-            <span>TRADING PLATFORM</span>
-        </div>
-    </div>
-
-    <div class="menu-title">Main Menu</div>
-
-    <nav class="menu">
-
-        <a href="#" class="active">
-            <span class="icon">⌂</span>
-            <span>Dashboard</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">▣</span>
-            <span>Markets</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">◈</span>
-            <span>Portfolio</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">↕</span>
-            <span>Positions</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">▤</span>
-            <span>Orders</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">★</span>
-            <span>Watchlist</span>
-        </a>
-
-    </nav>
-
-    <div class="menu-title">Trading</div>
-
-    <nav class="menu">
-
-        <a href="#">
-            <span class="icon">◉</span>
-            <span>Strategies</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">⚡</span>
-            <span>Automation</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">◫</span>
-            <span>Alerts</span>
-        </a>
-
-    </nav>
-
-    <div class="menu-title">Account</div>
-
-    <nav class="menu">
-
-        <a href="#">
-            <span class="icon">⚙</span>
-            <span>Settings</span>
-        </a>
-
-        <a href="#">
-            <span class="icon">?</span>
-            <span>Support</span>
-        </a>
-
-    </nav>
-
-    <div class="sidebar-bottom">
-
-        <div class="user-card">
-
-            <div class="avatar">SR</div>
-
-            <div class="user-info">
-                <strong>Trader Account</strong>
-                <span>Premium Member</span>
-            </div>
-
-            <span>⋮</span>
-
-        </div>
-
-    </div>
-
+<aside class="sidebar" id="sidebar">
+  <div class="brand"><div class="logo">T</div><div><strong>TGA</strong><span>TRADING PLATFORM</span></div></div>
+  <div class="section-title">MAIN MENU</div>
+  <nav class="nav">
+    <button class="active" data-page="dashboard"><span class="icon">⌂</span>Dashboard</button>
+    <button data-page="markets"><span class="icon">▣</span>Markets</button>
+    <button data-page="portfolio"><span class="icon">◇</span>Portfolio</button>
+    <button data-page="positions"><span class="icon">↕</span>Positions</button>
+    <button data-page="orders"><span class="icon">☷</span>Orders</button>
+    <button data-page="watchlist"><span class="icon">★</span>Watchlist</button>
+  </nav>
+  <div class="section-title">TRADING</div>
+  <nav class="nav">
+    <button data-page="strategies"><span class="icon">◎</span>Strategies</button>
+    <button data-page="automation"><span class="icon">ϟ</span>Automation</button>
+    <button data-page="alerts"><span class="icon">◈</span>Alerts</button>
+  </nav>
+  <div class="section-title">ACCOUNT</div>
+  <nav class="nav">
+    <button data-page="settings"><span class="icon">⚙</span>Settings</button>
+    <button data-page="support"><span class="icon">?</span>Support</button>
+  </nav>
+  <div class="account"><div class="avatar">SR</div><div><b>Trader Account</b><br><small>Premium Member</small></div></div>
 </aside>
 
-
-<!-- MAIN -->
-
 <main class="main">
-
 <header class="topbar">
-
-    <div class="page-title">
-        <h1>Trading Dashboard</h1>
-        <p>Welcome to TGA Trading Platform</p>
-    </div>
-
-    <div class="top-actions">
-
-        <div class="market-status">
-            <span class="dot"></span>
-            Market Live
-        </div>
-
-        <button class="notification">♢</button>
-
-        <button class="notification">⌄</button>
-
-    </div>
-
+  <div class="title"><h1 id="pageTitle">Trading Dashboard</h1><p id="pageSub">Welcome to TGA Trading Platform</p></div>
+  <div class="top-actions"><button class="top-btn mobile-menu" onclick="toggleSidebar()">☰</button><div class="live"><i></i>Market Live</div><button class="top-btn">♢</button><button class="top-btn">⌄</button></div>
 </header>
 
-
-<div class="content">
-
-
-<!-- MARKET OVERVIEW -->
-
-<div class="market-strip">
-
-    <div class="market-card">
-        <div class="name">NIFTY 50</div>
-        <div class="price" id="nifty">25,380.25</div>
-        <div class="change up">▲ 0.72%</div>
-    </div>
-
-    <div class="market-card">
-        <div class="name">BANK NIFTY</div>
-        <div class="price" id="banknifty">57,420.80</div>
-        <div class="change up">▲ 0.48%</div>
-    </div>
-
-    <div class="market-card">
-        <div class="name">SENSEX</div>
-        <div class="price">83,120.42</div>
-        <div class="change down">▼ 0.18%</div>
-    </div>
-
-    <div class="market-card">
-        <div class="name">INDIA VIX</div>
-        <div class="price">12.84</div>
-        <div class="change down">▼ 2.31%</div>
-    </div>
-
+<section class="page active" id="dashboard">
+<div class="cards">
+  <div class="card market-card"><span class="label">NIFTY 50</span><div class="price">25,381.25</div><div class="change up">▲ 0.72%</div></div>
+  <div class="card market-card"><span class="label">BANK NIFTY</span><div class="price">57,405.91</div><div class="change up">▲ 0.48%</div></div>
+  <div class="card market-card"><span class="label">SENSEX</span><div class="price">83,120.42</div><div class="change down">▼ 0.18%</div></div>
+  <div class="card market-card"><span class="label">INDIA VIX</span><div class="price">12.84</div><div class="change down">▼ 2.31%</div></div>
 </div>
-
-
-<div class="dashboard-grid">
-
-
-<!-- LEFT COLUMN -->
-
-<div>
-
-
-<!-- PORTFOLIO -->
-
-<div class="card">
-
-    <div class="card-header">
-        <h2>Portfolio Overview</h2>
-        <span>Today</span>
-    </div>
-
-    <div class="portfolio">
-
-        <div class="portfolio-label">
-            Total Portfolio Value
-        </div>
-
-        <div class="portfolio-value">
-            ₹12,84,650
-        </div>
-
-        <div class="portfolio-profit up">
-            + ₹18,420 &nbsp; (+1.45%)
-        </div>
-
-        <div class="stats">
-
-            <div class="stat">
-                <label>Available Margin</label>
-                <strong>₹4,85,200</strong>
-            </div>
-
-            <div class="stat">
-                <label>Invested</label>
-                <strong>₹7,99,450</strong>
-            </div>
-
-            <div class="stat">
-                <label>Day P&L</label>
-                <strong class="up">+₹18,420</strong>
-            </div>
-
-        </div>
-
-    </div>
-
-
-<!-- CHART -->
-
-<div class="chart">
-
-<svg viewBox="0 0 800 250" preserveAspectRatio="none">
-
-<defs>
-
-<linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
-
-<stop offset="0%" stop-opacity=".5"/>
-<stop offset="100%" stop-opacity="0"/>
-
-</linearGradient>
-
-</defs>
-
-<line x1="0" y1="50" x2="800" y2="50" class="chart-grid"/>
-<line x1="0" y1="100" x2="800" y2="100" class="chart-grid"/>
-<line x1="0" y1="150" x2="800" y2="150" class="chart-grid"/>
-<line x1="0" y1="200" x2="800" y2="200" class="chart-grid"/>
-
-<path class="chart-area"
-d="M0,190 L70,170 L140,180 L210,135 L280,150 L350,105 L420,120 L490,90 L560,110 L630,65 L700,80 L800,40 L800,250 L0,250 Z"/>
-
-<path class="chart-line"
-d="M0,190 L70,170 L140,180 L210,135 L280,150 L350,105 L420,120 L490,90 L560,110 L630,65 L700,80 L800,40"/>
-
-</svg>
-
+<div class="grid-main">
+<div class="left">
+ <div class="panel">
+  <div class="panel-head"><h3>Portfolio Overview</h3><span>Today</span></div>
+  <div class="overview"><div class="eyebrow">Total Portfolio Value</div><div class="big">₹12,84,650</div><div class="profit">+ ₹18,420 &nbsp; (+1.45%)</div>
+   <div class="stats"><div class="stat"><small>Available Margin</small><b>₹4,85,200</b></div><div class="stat"><small>Invested</small><b>₹7,99,450</b></div><div class="stat"><small>Day P&L</small><b class="up">+₹18,420</b></div></div>
+   <div class="chart"><svg viewBox="0 0 900 200" preserveAspectRatio="none"><line x1="0" y1="35" x2="900" y2="35" class="gridline"/><line x1="0" y1="85" x2="900" y2="85" class="gridline"/><line x1="0" y1="135" x2="900" y2="135" class="gridline"/><line x1="0" y1="185" x2="900" y2="185" class="gridline"/><polyline class="line" points="0,160 70,145 140,152 210,118 280,130 350,92 420,105 490,78 560,94 630,55 700,68 770,43 850,20 900,8"/></svg></div>
+  </div>
+ </div>
+ <div class="panel"><div class="panel-head"><h3>Open Positions</h3><span>3 Positions</span></div><div style="overflow:auto"><table class="table"><thead><tr><th>SYMBOL</th><th>SIDE</th><th>QTY</th><th>AVG PRICE</th><th>LTP</th><th>P&L</th><th>ACTION</th></tr></thead><tbody>
+ <tr><td><b>NIFTY 25300 CE</b></td><td><span class="badge buy">BUY</span></td><td>50</td><td>₹182.50</td><td>₹218.40</td><td class="up">+₹1,795</td><td><button class="exit" onclick="openExit('NIFTY 25300 CE')">EXIT</button></td></tr>
+ <tr><td><b>BANKNIFTY 57400 CE</b></td><td><span class="badge buy">BUY</span></td><td>30</td><td>₹320.20</td><td>₹348.70</td><td class="up">+₹855</td><td><button class="exit" onclick="openExit('BANKNIFTY 57400 CE')">EXIT</button></td></tr>
+ <tr><td><b>SENSEX 83200 PE</b></td><td><span class="badge sell">SELL</span></td><td>20</td><td>₹205.10</td><td>₹190.60</td><td class="up">+₹290</td><td><button class="exit" onclick="openExit('SENSEX 83200 PE')">EXIT</button></td></tr>
+ </tbody></table></div></div>
 </div>
-
+<div class="right">
+ <div class="panel quick"><div class="panel-head"><h3>Quick Trade</h3><span>Paper Trading</span></div><div class="body">
+  <div class="field"><label>SELECTED INSTRUMENT</label><input id="instrument" value="NIFTY 50"></div>
+  <div class="field"><label>ORDER TYPE</label><select><option>Market Order</option><option>Limit Order</option><option>Stop Loss</option></select></div>
+  <div class="field"><label>QUANTITY</label><input id="qty" type="number" value="50"></div>
+  <div class="trade-btns"><button class="buy" onclick="placeOrder('BUY')">BUY</button><button class="sell" onclick="placeOrder('SELL')">SELL</button></div>
+ </div></div>
+ <div class="panel"><div class="panel-head"><h3>Watchlist</h3><span>Live</span></div>
+  <div class="watch-row"><b>RELIANCE<small>Reliance Industries</small></b><span>₹1,482.40</span><span class="up">+1.22%</span></div>
+  <div class="watch-row"><b>HDFCBANK<small>HDFC Bank</small></b><span>₹1,987.60</span><span class="up">+0.84%</span></div>
+  <div class="watch-row"><b>TCS<small>Tata Consultancy</small></b><span>₹3,422.10</span><span class="down">-0.42%</span></div>
+  <div class="watch-row"><b>INFY<small>Infosys</small></b><span>₹1,612.30</span><span class="up">+0.65%</span></div>
+  <div class="watch-row"><b>SBIN<small>State Bank of India</small></b><span>₹842.55</span><span class="up">+1.08%</span></div>
+ </div>
+ <div class="panel"><div class="panel-head"><h3>Recent Orders</h3><span>View All</span></div>
+  <div class="watch-row"><b>NIFTY 25300 CE<small>BUY · Market</small></b><span>50 Qty</span><span class="up">Filled</span></div>
+  <div class="watch-row"><b>BANKNIFTY 57400 CE<small>BUY · Market</small></b><span>30 Qty</span><span class="up">Filled</span></div>
+ </div>
 </div>
-
-
-<!-- POSITIONS -->
-
-<div class="card full-card">
-
-    <div class="card-header">
-        <h2>Open Positions</h2>
-        <span>3 Positions</span>
-    </div>
-
-    <div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-<th>Symbol</th>
-<th>Side</th>
-<th>Qty</th>
-<th>Avg Price</th>
-<th>LTP</th>
-<th>P&L</th>
-<th>Action</th>
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td>
-<strong>NIFTY 25300 CE</strong>
-</td>
-
-<td>
-<span class="buy-badge">BUY</span>
-</td>
-
-<td>50</td>
-
-<td>₹182.50</td>
-
-<td>₹218.40</td>
-
-<td class="up">+₹1,795</td>
-
-<td>
-<button class="btn btn-sell">EXIT</button>
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-<strong>BANKNIFTY 57400 CE</strong>
-</td>
-
-<td>
-<span class="buy-badge">BUY</span>
-</td>
-
-<td>30</td>
-
-<td>₹320.20</td>
-
-<td>₹348.70</td>
-
-<td class="up">+₹855</td>
-
-<td>
-<button class="btn btn-sell">EXIT</button>
-</td>
-
-</tr>
-
-
-<tr>
-
-<td>
-<strong>NIFTY 25400 PE</strong>
-</td>
-
-<td>
-<span class="sell-badge">SELL</span>
-</td>
-
-<td>50</td>
-
-<td>₹205.60</td>
-
-<td>₹190.20</td>
-
-<td class="up">+₹770</td>
-
-<td>
-<button class="btn btn-buy">BUY</button>
-</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
 </div>
-
-</div>
-
-</div>
-
-
-<!-- RIGHT COLUMN -->
-
-<div>
-
-
-<!-- QUICK TRADE -->
-
-<div class="card">
-
-<div class="card-header">
-
-<h2>Quick Trade</h2>
-
-<span>Paper Trading</span>
-
-</div>
-
-<div class="quick-trade">
-
-<div class="trade-symbol">
-
-<small>Selected Instrument</small>
-
-<strong>NIFTY 50</strong>
-
-<span class="up" style="float:right;font-size:12px">
-25,380.25
-</span>
-
-</div>
-
-<select class="trade-input">
-
-<option>Market Order</option>
-<option>Limit Order</option>
-<option>Stop Loss</option>
-
-</select>
-
-<input
-class="trade-input"
-type="number"
-placeholder="Quantity"
-value="50">
-
-<div class="trade-actions">
-
-<button class="btn btn-buy" onclick="trade('BUY')">
-BUY
-</button>
-
-<button class="btn btn-sell" onclick="trade('SELL')">
-SELL
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- WATCHLIST -->
-
-<div class="card" style="margin-top:18px">
-
-<div class="card-header">
-
-<h2>Watchlist</h2>
-
-<span>Live</span>
-
-</div>
-
-<div class="watchlist">
-
-<div class="watch-row">
-
-<div>
-<div class="symbol">RELIANCE</div>
-<span class="company">Reliance Industries</span>
-</div>
-
-<div class="price">₹1,482.40</div>
-
-<div class="percent up">+1.22%</div>
-
-</div>
-
-
-<div class="watch-row">
-
-<div>
-<div class="symbol">HDFCBANK</div>
-<span class="company">HDFC Bank</span>
-</div>
-
-<div class="price">₹1,987.60</div>
-
-<div class="percent up">+0.84%</div>
-
-</div>
-
-
-<div class="watch-row">
-
-<div>
-<div class="symbol">TCS</div>
-<span class="company">Tata Consultancy</span>
-</div>
-
-<div class="price">₹3,422.10</div>
-
-<div class="percent down">-0.42%</div>
-
-</div>
-
-
-<div class="watch-row">
-
-<div>
-<div class="symbol">INFY</div>
-<span class="company">Infosys</span>
-</div>
-
-<div class="price">₹1,612.30</div>
-
-<div class="percent up">+0.65%</div>
-
-</div>
-
-
-<div class="watch-row">
-
-<div>
-<div class="symbol">SBIN</div>
-<span class="company">State Bank of India</span>
-</div>
-
-<div class="price">₹842.55</div>
-
-<div class="percent up">+1.08%</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- RECENT ORDERS -->
-
-<div class="card" style="margin-top:18px">
-
-<div class="card-header">
-
-<h2>Recent Orders</h2>
-
-<span>View All</span>
-
-</div>
-
-
-<div class="order-row">
-
-<div class="order-left">
-
-<strong>NIFTY 25300 CE</strong>
-
-<span>BUY · 50 Qty</span>
-
-</div>
-
-<div class="order-right">
-
-<strong class="up">Filled</strong>
-
-<span>10:42 AM</span>
-
-</div>
-
-</div>
-
-
-<div class="order-row">
-
-<div class="order-left">
-
-<strong>BANKNIFTY 57400 CE</strong>
-
-<span>BUY · 30 Qty</span>
-
-</div>
-
-<div class="order-right">
-
-<strong class="up">Filled</strong>
-
-<span>11:15 AM</span>
-
-</div>
-
-</div>
-
-
-<div class="order-row">
-
-<div class="order-left">
-
-<strong>NIFTY 25400 PE</strong>
-
-<span>SELL · 50 Qty</span>
-
-</div>
-
-<div class="order-right">
-
-<strong class="up">Filled</strong>
-
-<span>12:06 PM</span>
-
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-</div>
-
-
-<!-- STRATEGIES -->
-
-<div class="card full-card">
-
-<div class="card-header">
-
-<h2>TGA Strategies</h2>
-
-<span>Trading Signals</span>
-
-</div>
-
-<div class="table-wrap">
-
-<table>
-
-<thead>
-
-<tr>
-
-<th>Strategy</th>
-<th>Instrument</th>
-<th>Signal</th>
-<th>Entry</th>
-<th>Target</th>
-<th>Stop Loss</th>
-<th>Status</th>
-
-</tr>
-
-</thead>
-
-<tbody>
-
-<tr>
-
-<td><strong>Golden Line</strong></td>
-
-<td>NIFTY</td>
-
-<td><span class="buy-badge">BUY</span></td>
-
-<td>25,360</td>
-
-<td>25,500</td>
-
-<td>25,290</td>
-
-<td class="up">Active</td>
-
-</tr>
-
-
-<tr>
-
-<td><strong>Black Box</strong></td>
-
-<td>BANKNIFTY</td>
-
-<td><span class="sell-badge">SELL</span></td>
-
-<td>57,450</td>
-
-<td>57,100</td>
-
-<td>57,650</td>
-
-<td class="up">Active</td>
-
-</tr>
-
-
-<tr>
-
-<td><strong>Kohinoor</strong></td>
-
-<td>SENSEX</td>
-
-<td><span class="buy-badge">BUY</span></td>
-
-<td>83,050</td>
-
-<td>83,500</td>
-
-<td>82,800</td>
-
-<td style="color:#697386">Waiting</td>
-
-</tr>
-
-</tbody>
-
-</table>
-
-</div>
-
-</div>
-
-
-</div>
-
-</main>
-
-</div>
-
+</section>
+
+<section class="page" id="markets">
+<div class="notice">Market data shown here is demo data. Connect a broker/data API to make prices genuinely live.</div>
+<div class="cards"><div class="card"><span class="label">NIFTY 50</span><div class="price">25,381.25</div><div class="change up">▲ 0.72%</div></div><div class="card"><span class="label">BANK NIFTY</span><div class="price">57,405.91</div><div class="change up">▲ 0.48%</div></div><div class="card"><span class="label">SENSEX</span><div class="price">83,120.42</div><div class="change down">▼ 0.18%</div></div><div class="card"><span class="label">INDIA VIX</span><div class="price">12.84</div><div class="change down">▼ 2.31%</div></div></div>
+<div class="panel"><div class="panel-head"><h3>Market Watch</h3><span>Indices & Stocks</span></div><table class="table"><thead><tr><th>SYMBOL</th><th>LTP</th><th>CHANGE</th><th>HIGH</th><th>LOW</th><th>STATUS</th></tr></thead><tbody>
+<tr><td>NIFTY 50</td><td>25,381.25</td><td class="up">+0.72%</td><td>25,450.80</td><td>25,120.40</td><td>Open</td></tr><tr><td>BANK NIFTY</td><td>57,405.91</td><td class="up">+0.48%</td><td>57,620.20</td><td>56,980.10</td><td>Open</td></tr><tr><td>SENSEX</td><td>83,120.42</td><td class="down">-0.18%</td><td>83,580.30</td><td>82,910.70</td><td>Open</td></tr><tr><td>RELIANCE</td><td>1,482.40</td><td class="up">+1.22%</td><td>1,495.00</td><td>1,454.20</td><td>Open</td></tr><tr><td>TCS</td><td>3,422.10</td><td class="down">-0.42%</td><td>3,455.50</td><td>3,401.20</td><td>Open</td></tr></tbody></table></div>
+</section>
+
+<section class="page" id="portfolio">
+<div class="cards-3"><div class="card"><span class="label">TOTAL VALUE</span><div class="big">₹12,84,650</div></div><div class="card"><span class="label">TODAY P&L</span><div class="big up">+₹18,420</div></div><div class="card"><span class="label">TOTAL RETURN</span><div class="big up">+14.85%</div></div></div>
+<div class="panel"><div class="panel-head"><h3>Portfolio Holdings</h3><span>All holdings</span></div><table class="table"><thead><tr><th>SYMBOL</th><th>QTY</th><th>AVG</th><th>LTP</th><th>INVESTED</th><th>P&L</th></tr></thead><tbody>
+<tr><td>RELIANCE</td><td>40</td><td>₹1,410</td><td>₹1,482.40</td><td>₹56,400</td><td class="up">+₹2,896</td></tr><tr><td>HDFCBANK</td><td>50</td><td>₹1,920</td><td>₹1,987.60</td><td>₹96,000</td><td class="up">+₹3,380</td></tr><tr><td>TCS</td><td>20</td><td>₹3,380</td><td>₹3,422.10</td><td>₹67,600</td><td class="up">+₹842</td></tr></tbody></table></div>
+</section>
+
+<section class="page" id="positions">
+<div class="panel"><div class="panel-head"><h3>Open Positions</h3><span>3 Active</span></div><table class="table"><thead><tr><th>SYMBOL</th><th>SIDE</th><th>QTY</th><th>AVG</th><th>LTP</th><th>P&L</th><th>ACTION</th></tr></thead><tbody>
+<tr><td>NIFTY 25300 CE</td><td><span class="badge buy">BUY</span></td><td>50</td><td>₹182.50</td><td>₹218.40</td><td class="up">+₹1,795</td><td><button class="exit" onclick="openExit('NIFTY 25300 CE')">EXIT</button></td></tr>
+<tr><td>BANKNIFTY 57400 CE</td><td><span class="badge buy">BUY</span></td><td>30</td><td>₹320.20</td><td>₹348.70</td><td class="up">+₹855</td><td><button class="exit" onclick="openExit('BANKNIFTY 57400 CE')">EXIT</button></td></tr>
+<tr><td>SENSEX 83200 PE</td><td><span class="badge sell">SELL</span></td><td>20</td><td>₹205.10</td><td>₹190.60</td><td class="up">+₹290</td><td><button class="exit" onclick="openExit('SENSEX 83200 PE')">EXIT</button></td></tr>
+</tbody></table></div>
+</section>
+
+<section class="page" id="orders">
+<div class="searchbar"><input placeholder="Search orders..."><button class="primary" onclick="toast('New order window ready')">+ New Order</button></div>
+<div class="panel"><div class="panel-head"><h3>Order History</h3><span>Today</span></div><table class="table"><thead><tr><th>TIME</th><th>SYMBOL</th><th>SIDE</th><th>QTY</th><th>PRICE</th><th>TYPE</th><th>STATUS</th></tr></thead><tbody>
+<tr><td>15:21:14</td><td>NIFTY 25300 CE</td><td><span class="badge buy">BUY</span></td><td>50</td><td>₹182.50</td><td>Market</td><td class="up">Filled</td></tr>
+<tr><td>14:48:32</td><td>BANKNIFTY 57400 CE</td><td><span class="badge buy">BUY</span></td><td>30</td><td>₹320.20</td><td>Market</td><td class="up">Filled</td></tr>
+<tr><td>13:12:09</td><td>SENSEX 83200 PE</td><td><span class="badge sell">SELL</span></td><td>20</td><td>₹205.10</td><td>Limit</td><td class="up">Filled</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="page" id="watchlist">
+<div class="searchbar"><input id="watchInput" placeholder="Add symbol to watchlist..."><button class="primary" onclick="addWatch()">Add</button></div>
+<div class="panel"><div class="panel-head"><h3>My Watchlist</h3><span>5 Symbols</span></div><div id="watchList">
+<div class="watch-row"><b>RELIANCE<small>Reliance Industries</small></b><span>₹1,482.40</span><span class="up">+1.22%</span></div><div class="watch-row"><b>HDFCBANK<small>HDFC Bank</small></b><span>₹1,987.60</span><span class="up">+0.84%</span></div><div class="watch-row"><b>TCS<small>Tata Consultancy</small></b><span>₹3,422.10</span><span class="down">-0.42%</span></div><div class="watch-row"><b>INFY<small>Infosys</small></b><span>₹1,612.30</span><span class="up">+0.65%</span></div><div class="watch-row"><b>SBIN<small>State Bank of India</small></b><span>₹842.55</span><span class="up">+1.08%</span></div>
+</div></div></section>
+
+<section class="page" id="strategies">
+<div class="notice">Create and manage your trading strategies here. Strategy execution will require your backend/broker connection.</div>
+<div class="cards-3">
+<div class="panel strategy-card"><h3>Golden Line</h3><p>Signal-based strategy with configurable entry, stop loss and target rules.</p><button onclick="toast('Golden Line selected')">Open Strategy</button></div>
+<div class="panel strategy-card"><h3>Black Box</h3><p>Premium strategy module for your TGA trading workflow and alerts.</p><button onclick="toast('Black Box selected')">Open Strategy</button></div>
+<div class="panel strategy-card"><h3>Kohinoor</h3><p>Automation-ready strategy configuration with risk controls.</p><button onclick="toast('Kohinoor selected')">Open Strategy</button></div>
+</div></section>
+
+<section class="page" id="automation">
+<div class="notice">Automation is currently a frontend control panel. TradingView webhook + broker API must be connected on a secure backend before live orders are enabled.</div>
+<div class="cards-3"><div class="panel setting"><h3>Lakshman Rekha</h3><div class="toggle-row">Automation <div class="toggle on" onclick="toggle(this)"></div></div><div class="toggle-row">Paper Trading <div class="toggle on" onclick="toggle(this)"></div></div><button class="primary" style="margin-top:15px" onclick="toast('Automation settings saved')">Save Settings</button></div>
+<div class="panel setting"><h3>TradingView Webhook</h3><div class="toggle-row">Webhook Enabled <div class="toggle" onclick="toggle(this)"></div></div><div class="field" style="margin-top:15px"><label>WEBHOOK STATUS</label><input value="Not connected" readonly></div></div>
+<div class="panel setting"><h3>Risk Controls</h3><div class="toggle-row">Max Daily Loss <b>₹5,000</b></div><div class="toggle-row">Max Trades <b>5</b></div><div class="toggle-row">Auto Square-Off <b>15:20</b></div></div></div>
+</section>
+
+<section class="page" id="alerts">
+<div class="searchbar"><input placeholder="Alert name"><button class="primary" onclick="toast('Alert created')">+ Create Alert</button></div>
+<div class="panel"><div class="panel-head"><h3>Active Alerts</h3><span>3 Alerts</span></div>
+<div class="watch-row"><b>NIFTY Breakout<small>Above 25,450</small></b><span>Price Alert</span><span class="up">Active</span></div>
+<div class="watch-row"><b>BANKNIFTY Level<small>Above 57,600</small></b><span>Price Alert</span><span class="up">Active</span></div>
+<div class="watch-row"><b>TradingView Signal<small>Webhook notification</small></b><span>Webhook</span><span class="up">Active</span></div>
+</div></section>
+
+<section class="page" id="settings">
+<div class="settings-grid"><div class="panel setting"><h3>Account Settings</h3><div class="toggle-row">Paper Trading <div class="toggle on" onclick="toggle(this)"></div></div><div class="toggle-row">Order Confirmation <div class="toggle on" onclick="toggle(this)"></div></div><div class="toggle-row">Email Notifications <div class="toggle" onclick="toggle(this)"></div></div><div class="toggle-row">Sound Alerts <div class="toggle on" onclick="toggle(this)"></div></div></div>
+<div class="panel setting"><h3>Trading Preferences</h3><div class="field"><label>DEFAULT EXCHANGE</label><select><option>NSE</option><option>BSE</option></select></div><div class="field"><label>DEFAULT ORDER TYPE</label><select><option>Market Order</option><option>Limit Order</option></select></div><div class="field"><label>TIMEZONE</label><select><option>Asia/Kolkata (IST)</option></select></div></div></div>
+</section>
+
+<section class="page" id="support">
+<div class="cards-3"><div class="panel setting"><h3>Help Center</h3><p style="font-size:11px;color:var(--muted);line-height:1.7">Find answers about your TGA Trading Platform, orders, strategies and account settings.</p><button class="primary" style="margin-top:15px" onclick="toast('Help center opened')">Open Help</button></div>
+<div class="panel setting"><h3>Contact Support</h3><p style="font-size:11px;color:var(--muted);line-height:1.7">Need assistance? Create a support request for the TGA team.</p><button class="primary" style="margin-top:15px" onclick="toast('Support request started')">Contact Support</button></div>
+<div class="panel setting"><h3>System Status</h3><div class="toggle-row">Dashboard <span class="up">Operational</span></div><div class="toggle-row">Market Data <span class="up">Demo</span></div><div class="toggle-row">Broker API <span class="down">Not Connected</span></div></div></div>
+</section>
+</main></div>
+
+<div class="modal" id="modal"><div class="modal-box"><h2 id="modalTitle">Confirm Order</h2><p id="modalText"></p><div class="modal-actions"><button onclick="closeModal()">Cancel</button><button class="confirm" onclick="confirmAction()">Confirm</button></div></div></div>
+<div class="toast" id="toast"></div>
 
 <script>
-
-/* SIMPLE LIVE PRICE EFFECT */
-
-let nifty = 25380.25;
-let bank = 57420.80;
-
-setInterval(function(){
-
-    nifty += (Math.random() - .5) * 2;
-    bank += (Math.random() - .5) * 4;
-
-    document.getElementById("nifty").innerText =
-        nifty.toLocaleString("en-IN",{
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        });
-
-    document.getElementById("banknifty").innerText =
-        bank.toLocaleString("en-IN",{
-            minimumFractionDigits:2,
-            maximumFractionDigits:2
-        });
-
-},2000);
-
-
-/* QUICK TRADE */
-
-function trade(side){
-
-    if(side === "BUY"){
-        alert("BUY order selected. Broker API will be connected in the next stage.");
-    }
-
-    if(side === "SELL"){
-        alert("SELL order selected. Broker API will be connected in the next stage.");
-    }
-
+const titles={
+ dashboard:['Trading Dashboard','Welcome to TGA Trading Platform'],markets:['Markets','Live market overview and watchlist'],
+ portfolio:['Portfolio','Your investment portfolio'],positions:['Positions','Manage your open positions'],
+ orders:['Orders','Order history and execution'],watchlist:['Watchlist','Track your favourite instruments'],
+ strategies:['Strategies','Trading strategy management'],automation:['Automation','Trading automation controls'],
+ alerts:['Alerts','Price and trading alerts'],settings:['Settings','Account and trading preferences'],support:['Support','Help and system support']
+};
+let pending=null;
+document.querySelectorAll('.nav button').forEach(btn=>{
+ btn.addEventListener('click',()=>{
+   document.querySelectorAll('.nav button').forEach(b=>b.classList.remove('active'));
+   btn.classList.add('active');
+   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+   const id=btn.dataset.page; document.getElementById(id).classList.add('active');
+   document.getElementById('pageTitle').textContent=titles[id][0];
+   document.getElementById('pageSub').textContent=titles[id][1];
+   if(window.innerWidth<701) document.getElementById('sidebar').style.width='0';
+ });
+});
+function placeOrder(side){
+ const symbol=document.getElementById('instrument').value||'NIFTY 50';
+ const qty=document.getElementById('qty').value||1;
+ pending=()=>toast(side+' order placed for '+qty+' '+symbol+' (Paper Trading)');
+ document.getElementById('modalTitle').textContent='Confirm '+side+' Order';
+ document.getElementById('modalText').textContent='You are about to place a '+side+' order for '+qty+' quantity of '+symbol+'. Current mode: Paper Trading.';
+ document.getElementById('modal').classList.add('show');
 }
-
+function openExit(symbol){
+ pending=()=>toast('Exit request created for '+symbol+' (Paper Trading)');
+ document.getElementById('modalTitle').textContent='Exit Position';
+ document.getElementById('modalText').textContent='Confirm exit for '+symbol+'. This demo is in Paper Trading mode.';
+ document.getElementById('modal').classList.add('show');
+}
+function closeModal(){document.getElementById('modal').classList.remove('show');pending=null}
+function confirmAction(){if(pending) pending();closeModal()}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function toggle(el){el.classList.toggle('on');toast(el.classList.contains('on')?'Setting enabled':'Setting disabled')}
+function addWatch(){const input=document.getElementById('watchInput');const v=input.value.trim().toUpperCase();if(!v)return;const row=document.createElement('div');row.className='watch-row';row.innerHTML='<b>'+v+'<small>Custom symbol</small></b><span>—</span><span>Added</span>';document.getElementById('watchList').appendChild(row);input.value='';toast(v+' added to watchlist')}
+function toggleSidebar(){const s=document.getElementById('sidebar');s.style.width=s.style.width==='225px'?'0':'225px'}
+setInterval(()=>{
+ const els=document.querySelectorAll('.market-card .price');
+ if(els.length){els[0].textContent=(25381.25+(Math.random()-.5)*12).toFixed(2);els[1].textContent=(57405.91+(Math.random()-.5)*20).toFixed(2)}
+},4000);
 </script>
-
 </body>
 </html>
